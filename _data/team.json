@@ -6,9 +6,10 @@
       "handle": "@smhu",
       "name": "Syros",
       "order": 1,
-      "roblox": "",
-      "twitter": "",
-      "role": "Founder · Lead Programmer",
+      "roblox": "https://www.roblox.com/users/1317490828/profile",
+      "twitter": "https://x.com/dqrcz",
+      "role": "Lead Programmer",
+      "avatar": "/assets/uploads/image_2026-04-30_020901347.png",
       "group": "Founder"
     },
     {
@@ -17,9 +18,10 @@
       "handle": "@noorvfx.",
       "name": "Noor",
       "order": 2,
-      "roblox": "",
-      "twitter": "",
-      "role": "Lead Director · Lead VFX Artist",
+      "roblox": "https://www.roblox.com/users/54407402/profile",
+      "twitter": "https://x.com/NoorVFXX",
+      "role": "Lead VFX Artist",
+      "avatar": "/assets/uploads/image_2026-04-30_021056600.png",
       "group": "Board of Directors"
     },
     {
@@ -30,7 +32,7 @@
       "order": 3,
       "roblox": "https://www.roblox.com/users/2028452832/profile",
       "twitter": "https://x.com/00arukio",
-      "role": "Lead Director · Game Designer",
+      "role": "Project Management · Game Designer",
       "avatar": "/assets/uploads/image_2026-04-30_012641690.png",
       "group": "Board of Directors"
     },
@@ -40,9 +42,10 @@
       "handle": "@nile9079",
       "name": "Nile",
       "order": 4,
-      "roblox": "",
-      "twitter": "",
-      "role": "Investor · Ideas",
+      "roblox": "https://www.roblox.com/users/88859284/profile?friendshipSourceType=PlayerSearch",
+      "twitter": "https://x.com/FishyinDenial",
+      "role": "Project Management",
+      "avatar": "/assets/uploads/image_2026-04-30_021252771.png",
       "group": "Board of Directors"
     },
     {
@@ -51,9 +54,10 @@
       "handle": "@hoo123m12",
       "name": "Lol",
       "order": 5,
-      "roblox": "",
-      "twitter": "",
-      "role": "Front-End",
+      "roblox": "https://www.roblox.com/users/96992930/profile",
+      "twitter": "https://x.com/Hoo123m12",
+      "role": "Lead Developer",
+      "avatar": "/assets/uploads/image_2026-04-30_021448664.png",
       "group": "Development Team"
     }
   ]
