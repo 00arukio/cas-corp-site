@@ -1,11 +1,12 @@
 {
+  "color": "r",
+  "initial": "A",
+  "handle": "@iarukio",
   "name": "Arukio",
   "order": 3,
-  "group": "Board of Directors",
-  "role": "Lead Director · Game Designer",
-  "handle": "@iarukio",
-  "initial": "A",
-  "color": "r",
+  "roblox": "",
   "twitter": "",
-  "roblox": ""
+  "role": "Lead Director · Game Designer",
+  "avatar": "/assets/uploads/image_2026-04-30_012641690.png",
+  "group": "Board of Directors"
 }
