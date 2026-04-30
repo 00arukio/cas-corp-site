@@ -1,59 +1,64 @@
 {
   "members": [
     {
+      "color": "r",
+      "initial": "S",
+      "handle": "@smhu",
       "name": "Syros",
       "order": 1,
-      "group": "Founder",
-      "role": "Founder · Lead Programmer",
-      "handle": "@smhu",
-      "initial": "S",
-      "color": "r",
-      "twitter": "",
-      "roblox": ""
+      "roblox": "https://www.roblox.com/users/1317490828/profile",
+      "twitter": "https://x.com/dqrcz",
+      "role": "Lead Programmer",
+      "avatar": "/assets/uploads/image_2026-04-30_020901347.png",
+      "group": "Founder"
     },
     {
+      "color": "b",
+      "initial": "N",
+      "handle": "@noorvfx.",
       "name": "Noor",
       "order": 2,
-      "group": "Board of Directors",
-      "role": "Lead Director · Lead VFX Artist",
-      "handle": "@noorvfx.",
-      "initial": "N",
-      "color": "b",
-      "twitter": "",
-      "roblox": ""
+      "roblox": "https://www.roblox.com/users/54407402/profile",
+      "twitter": "https://x.com/NoorVFXX",
+      "role": "Lead VFX Artist",
+      "avatar": "/assets/uploads/image_2026-04-30_021056600.png",
+      "group": "Board of Directors"
     },
     {
+      "color": "r",
+      "initial": "A",
+      "handle": "@iarukio",
       "name": "Arukio",
       "order": 3,
-      "group": "Board of Directors",
-      "role": "Lead Director · Game Designer",
-      "handle": "@iarukio",
-      "initial": "A",
-      "color": "r",
-      "twitter": "",
-      "roblox": ""
+      "roblox": "https://www.roblox.com/users/2028452832/profile",
+      "twitter": "https://x.com/00arukio",
+      "role": "Project Management · Game Designer",
+      "avatar": "/assets/uploads/image_2026-04-30_012641690.png",
+      "group": "Board of Directors"
     },
     {
+      "color": "p",
+      "initial": "N",
+      "handle": "@nile9079",
       "name": "Nile",
       "order": 4,
-      "group": "Board of Directors",
-      "role": "Investor · Ideas",
-      "handle": "@nile9079",
-      "initial": "N",
-      "color": "p",
-      "twitter": "",
-      "roblox": ""
+      "roblox": "https://www.roblox.com/users/88859284/profile?friendshipSourceType=PlayerSearch",
+      "twitter": "https://x.com/FishyinDenial",
+      "role": "Project Management",
+      "avatar": "/assets/uploads/image_2026-04-30_021252771.png",
+      "group": "Board of Directors"
     },
     {
+      "color": "b",
+      "initial": "L",
+      "handle": "@hoo123m12",
       "name": "Lol",
       "order": 5,
-      "group": "Development Team",
-      "role": "Front-End",
-      "handle": "@hoo123m12",
-      "initial": "L",
-      "color": "b",
-      "twitter": "",
-      "roblox": ""
+      "roblox": "https://www.roblox.com/users/96992930/profile",
+      "twitter": "https://x.com/Hoo123m12",
+      "role": "Lead Developer",
+      "avatar": "/assets/uploads/image_2026-04-30_021448664.png",
+      "group": "Development Team"
     }
   ]
 }
