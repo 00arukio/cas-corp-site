@@ -1,0 +1,166 @@
+# Cas Corp Admin Panel Configuration
+# Edit this file to add new fields, collections, or change behavior.
+
+# Where edits are saved (your GitHub repo)
+backend:
+  name: git-gateway
+  branch: main
+
+# Where uploaded images go
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+# Make the admin look nicer
+display_url: https://cascorp.netlify.app
+site_url: https://cascorp.netlify.app
+
+# Collections — each one is an editable section in your admin
+collections:
+
+  # ============================================================
+  # TEAM MEMBERS
+  # ============================================================
+  - name: "team"
+    label: "👥 Team Members"
+    label_singular: "Team Member"
+    folder: "_data/team"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    summary: "{{name}} — {{role}}"
+    sortable_fields: ["order", "name"]
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower numbers appear first" }
+      - label: "Group"
+        name: "group"
+        widget: "select"
+        options: ["Founder", "Board of Directors", "Development Team"]
+        default: "Development Team"
+      - { label: "Role / Title", name: "role", widget: "string", hint: "e.g. 'Lead Programmer' or 'VFX Artist'" }
+      - { label: "Handle / @username", name: "handle", widget: "string", required: false, hint: "e.g. @arukio" }
+      - label: "Avatar Image"
+        name: "avatar"
+        widget: "image"
+        required: false
+        hint: "Upload a square image. If empty, the colored letter avatar will be used instead."
+      - { label: "Avatar Letter (fallback)", name: "initial", widget: "string", default: "?", hint: "Single letter shown when no avatar image is set" }
+      - label: "Avatar Color (fallback)"
+        name: "color"
+        widget: "select"
+        options:
+          - { label: "Red", value: "r" }
+          - { label: "Blue", value: "b" }
+          - { label: "Purple", value: "p" }
+        default: "r"
+      - { label: "Twitter / X URL", name: "twitter", widget: "string", required: false }
+      - { label: "Roblox URL", name: "roblox", widget: "string", required: false }
+
+  # ============================================================
+  # CODES (Anime Verse promo codes)
+  # ============================================================
+  - name: "codes"
+    label: "🎁 Promo Codes"
+    label_singular: "Code"
+    folder: "_data/codes"
+    create: true
+    delete: true
+    slug: "{{code}}"
+    extension: "json"
+    format: "json"
+    summary: "{{code}} — {{status}} — {{reward}}"
+    sortable_fields: ["status", "code"]
+    fields:
+      - { label: "Code", name: "code", widget: "string", hint: "The actual code players type in. e.g. UPDATE1" }
+      - { label: "Reward Description", name: "reward", widget: "string", hint: "e.g. '50 Gems' or 'Free pet'" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Active (visible & redeemable)", value: "active" }
+          - { label: "Upcoming (visible but not yet active)", value: "upcoming" }
+          - { label: "Expired (visible, marked as expired)", value: "expired" }
+        default: "active"
+      - { label: "Expiration Date", name: "expires", widget: "string", required: false, hint: "Optional. e.g. '2026-05-31' or 'No expiration'" }
+      - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower numbers appear first within their status group" }
+
+  # ============================================================
+  # JOB LISTINGS
+  # ============================================================
+  - name: "jobs"
+    label: "💼 Job Listings"
+    label_singular: "Job"
+    folder: "_data/jobs"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    summary: "{{title}} — {{open ? 'OPEN' : 'CLOSED'}}"
+    sortable_fields: ["order", "title"]
+    fields:
+      - { label: "Job Title", name: "title", widget: "string", hint: "e.g. 'VFX Artist'" }
+      - { label: "Type / Meta", name: "meta", widget: "string", default: "Commission · Remote", hint: "Short description shown under title" }
+      - { label: "Currently Open?", name: "open", widget: "boolean", default: false, hint: "Toggle on when actively hiring for this role" }
+      - { label: "Description", name: "description", widget: "text", required: false, hint: "Full details about the role" }
+      - { label: "Required Skills", name: "skills", widget: "string", required: false, hint: "Comma-separated. e.g. 'Blender, hard-surface modeling'" }
+      - { label: "Pay / Compensation", name: "pay", widget: "string", required: false, hint: "e.g. '$50/hr', 'Negotiable', 'Rev share'" }
+      - { label: "Display Order", name: "order", widget: "number", default: 1 }
+
+  # ============================================================
+  # BLOG POSTS (Anime Verse devlogs/news)
+  # ============================================================
+  - name: "posts"
+    label: "📝 Blog Posts"
+    label_singular: "Post"
+    folder: "_data/posts"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "json"
+    format: "json"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Tag", name: "tag", widget: "string", default: "Devlog", hint: "e.g. 'Devlog', 'Patch Notes', 'Announcement'" }
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "text", hint: "The actual post content. Line breaks are preserved." }
+      - { label: "Pinned to top?", name: "pinned", widget: "boolean", default: false }
+      - label: "Reactions"
+        name: "reactions"
+        widget: "list"
+        required: false
+        max: 3
+        hint: "Up to 3 custom reactions players can click on this post"
+        fields:
+          - { label: "Emoji", name: "emoji", widget: "string", hint: "Single emoji like 🔥 or ❤️" }
+          - { label: "Label", name: "label", widget: "string", required: false, hint: "Optional label, e.g. 'Hype'" }
+
+  # ============================================================
+  # SITE LINKS (Discord, Roblox, Twitter, etc.)
+  # ============================================================
+  - name: "settings"
+    label: "🔗 Site Settings"
+    files:
+      - name: "links"
+        label: "Social & Game Links"
+        file: "_data/settings/links.json"
+        fields:
+          - { label: "Discord Invite URL", name: "discord", widget: "string" }
+          - { label: "Roblox Group URL", name: "roblox", widget: "string" }
+          - { label: "Twitter / X URL", name: "twitter", widget: "string" }
+          - { label: "YouTube Channel URL", name: "youtube", widget: "string", required: false }
+          - { label: "Anime Verse Game URL", name: "game", widget: "string" }
+          - { label: "Apply / Careers Form URL", name: "apply", widget: "string", required: false, hint: "Google Form, Tally, etc." }
+      - name: "studio"
+        label: "Studio Info"
+        file: "_data/settings/studio.json"
+        fields:
+          - { label: "Studio Name", name: "name", widget: "string", default: "Cas Corp" }
+          - { label: "Tagline", name: "tagline", widget: "string", default: "Independent Roblox Studio · Est. 2023" }
+          - { label: "Studio Description", name: "description", widget: "text", default: "Cas Corp is a small, focused studio crafting stylized multiplayer experiences." }
+          - { label: "Founded Year", name: "founded", widget: "number", default: 2023 }

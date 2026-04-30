@@ -1,0 +1,5 @@
+# Netlify redirects file
+# Identity routes are auto-handled by Netlify, but this ensures admin works correctly
+
+# Force the admin trailing slash
+/admin   /admin/   301
