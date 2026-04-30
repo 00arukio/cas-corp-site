@@ -1,59 +1,60 @@
 {
   "members": [
     {
+      "color": "r",
+      "initial": "S",
+      "handle": "@smhu",
       "name": "Syros",
       "order": 1,
-      "group": "Founder",
-      "role": "Founder · Lead Programmer",
-      "handle": "@smhu",
-      "initial": "S",
-      "color": "r",
+      "roblox": "",
       "twitter": "",
-      "roblox": ""
+      "role": "Founder · Lead Programmer",
+      "group": "Founder"
     },
     {
+      "color": "b",
+      "initial": "N",
+      "handle": "@noorvfx.",
       "name": "Noor",
       "order": 2,
-      "group": "Board of Directors",
-      "role": "Lead Director · Lead VFX Artist",
-      "handle": "@noorvfx.",
-      "initial": "N",
-      "color": "b",
+      "roblox": "",
       "twitter": "",
-      "roblox": ""
+      "role": "Lead Director · Lead VFX Artist",
+      "group": "Board of Directors"
     },
     {
+      "color": "r",
+      "initial": "A",
+      "handle": "@iarukio",
       "name": "Arukio",
       "order": 3,
-      "group": "Board of Directors",
-      "role": "Lead Director · Game Designer",
-      "handle": "@iarukio",
-      "initial": "A",
-      "color": "r",
+      "roblox": "",
       "twitter": "",
-      "roblox": ""
+      "role": "Lead Director · Game Designer",
+      "avatar": "/assets/uploads/image_2026-04-30_012641690.png",
+      "group": "Board of Directors"
     },
     {
+      "color": "p",
+      "initial": "N",
+      "handle": "@nile9079",
       "name": "Nile",
       "order": 4,
-      "group": "Board of Directors",
-      "role": "Investor · Ideas",
-      "handle": "@nile9079",
-      "initial": "N",
-      "color": "p",
+      "roblox": "",
       "twitter": "",
-      "roblox": ""
+      "role": "Investor · Ideas",
+      "group": "Board of Directors"
     },
     {
+      "color": "b",
+      "initial": "L",
+      "handle": "@hoo123m12",
       "name": "Lol",
       "order": 5,
-      "group": "Development Team",
-      "role": "Front-End",
-      "handle": "@hoo123m12",
-      "initial": "L",
-      "color": "b",
+      "roblox": "",
       "twitter": "",
-      "roblox": ""
+      "role": "Front-End",
+      "group": "Development Team"
     }
   ]
 }
