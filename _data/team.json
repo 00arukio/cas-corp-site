@@ -1,0 +1,59 @@
+{
+  "members": [
+    {
+      "name": "Syros",
+      "order": 1,
+      "group": "Founder",
+      "role": "Founder · Lead Programmer",
+      "handle": "@smhu",
+      "initial": "S",
+      "color": "r",
+      "twitter": "",
+      "roblox": ""
+    },
+    {
+      "name": "Noor",
+      "order": 2,
+      "group": "Board of Directors",
+      "role": "Lead Director · Lead VFX Artist",
+      "handle": "@noorvfx.",
+      "initial": "N",
+      "color": "b",
+      "twitter": "",
+      "roblox": ""
+    },
+    {
+      "name": "Arukio",
+      "order": 3,
+      "group": "Board of Directors",
+      "role": "Lead Director · Game Designer",
+      "handle": "@iarukio",
+      "initial": "A",
+      "color": "r",
+      "twitter": "",
+      "roblox": ""
+    },
+    {
+      "name": "Nile",
+      "order": 4,
+      "group": "Board of Directors",
+      "role": "Investor · Ideas",
+      "handle": "@nile9079",
+      "initial": "N",
+      "color": "p",
+      "twitter": "",
+      "roblox": ""
+    },
+    {
+      "name": "Lol",
+      "order": 5,
+      "group": "Development Team",
+      "role": "Front-End",
+      "handle": "@hoo123m12",
+      "initial": "L",
+      "color": "b",
+      "twitter": "",
+      "roblox": ""
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "jobs": [
+    {
+      "title": "VFX Artist",
+      "meta": "Commission · Remote",
+      "open": false,
+      "description": "",
+      "skills": "",
+      "pay": "",
+      "order": 1
+    },
+    {
+      "title": "Modeler",
+      "meta": "Commission · Remote",
+      "open": false,
+      "description": "",
+      "skills": "",
+      "pay": "",
+      "order": 2
+    },
+    {
+      "title": "Builder",
+      "meta": "Commission · Remote",
+      "open": false,
+      "description": "",
+      "skills": "",
+      "pay": "",
+      "order": 3
+    },
+    {
+      "title": "SFX",
+      "meta": "Commission · Remote",
+      "open": false,
+      "description": "",
+      "skills": "",
+      "pay": "",
+      "order": 4
+    },
+    {
+      "title": "Concept Artist",
+      "meta": "Commission · Remote",
+      "open": false,
+      "description": "",
+      "skills": "",
+      "pay": "",
+      "order": 5
+    },
+    {
+      "title": "Animator",
+      "meta": "Commission · Remote",
+      "open": false,
+      "description": "",
+      "skills": "",
+      "pay": "",
+      "order": 6
+    }
+  ]
+}

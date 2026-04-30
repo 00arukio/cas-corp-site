@@ -110,6 +110,68 @@
   }
   .empty .em-title{font-size: 17px; color: var(--fg); font-weight: 500; margin-bottom: 6px}
 
+  /* Code cards (rendered by site-data.js) */
+  .codes-section-title{
+    font-size: 20px; letter-spacing: -0.01em;
+    margin: 32px 0 16px;
+    display: flex; align-items: baseline; gap: 10px;
+    font-weight: 500;
+  }
+  .codes-section-title:first-child{margin-top: 0}
+  .codes-count{font-family: var(--mono); font-size: 12px; color: var(--dim); font-weight: 400; letter-spacing: .06em}
+  .code-card{
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px 16px;
+    transition: border-color .2s, transform .2s, background .2s;
+    overflow: hidden;
+  }
+  .code-card:hover{border-color: var(--line-strong); transform: translateY(-1px)}
+  .code-card.expired{opacity: .55}
+  .code-card.expired .code-value{text-decoration: line-through; color: var(--dim)}
+  .code-card.upcoming::before{content:""; position:absolute; left:0; top:0; bottom:0; width: 3px; background: linear-gradient(180deg, oklch(0.68 0.18 255), oklch(0.66 0.22 22))}
+  .code-card.active::before{content:""; position:absolute; left:0; top:0; bottom:0; width: 3px; background: oklch(0.7 0.16 145)}
+  .code-status{
+    display: inline-block;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .22em;
+    padding: 3px 9px; border-radius: 999px;
+    background: oklch(1 0 0 / 0.06); color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .code-card.active .code-status{background: oklch(0.7 0.16 145 / 0.16); color: oklch(0.85 0.16 145)}
+  .code-card.upcoming .code-status{background: oklch(0.68 0.18 255 / 0.16); color: oklch(0.85 0.16 255)}
+  .code-card.expired .code-status{background: oklch(0.7 0.18 22 / 0.14); color: oklch(0.78 0.16 22)}
+  .code-value{
+    font-family: var(--mono); font-size: 18px; letter-spacing: .12em;
+    color: var(--fg); font-weight: 500;
+    padding: 10px 14px;
+    background: oklch(1 0 0 / 0.04);
+    border: 1px dashed var(--line-strong);
+    border-radius: 10px;
+    display: block; text-align: center;
+    margin-bottom: 12px;
+  }
+  .code-reward{font-size: 13.5px; color: var(--muted); line-height: 1.5}
+  .code-expires{font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; color: var(--dim); margin-top: 8px; text-transform: uppercase}
+  .code-copy{
+    margin-top: 14px; width: 100%;
+    background: oklch(1 0 0 / 0.05);
+    border: 1px solid var(--line-strong);
+    color: var(--fg); cursor: pointer;
+    padding: 9px 14px; border-radius: 9px;
+    font-family: var(--sans); font-size: 12.5px; font-weight: 500;
+    transition: all .2s;
+  }
+  .code-copy:hover{background: var(--grad); border-color: transparent}
+  .codes-empty{
+    border: 1px dashed var(--line-strong);
+    border-radius: 16px; padding: 60px 24px; text-align: center;
+    color: var(--muted);
+  }
+  .codes-empty .em-title{font-size: 18px; color: var(--fg); font-weight: 500; margin-bottom: 8px}
+
   .how-box{
     margin-top: 24px;
     border: 1px solid var(--line);
@@ -343,18 +405,9 @@
     <div class="wrap">
       <div class="codes-wrap reveal">
 
-        <div class="codes-group">
-          <h3>Active <span class="count">(0)</span></h3>
+        <div data-admin="codes">
           <div class="empty">
-            <div class="em-title">No active codes right now.</div>
-            <div>New codes drop on milestones — likes, visits, events, and social goals. Check back soon.</div>
-          </div>
-        </div>
-
-        <div class="codes-group">
-          <h3>Expired <span class="count">(0)</span></h3>
-          <div class="empty" style="padding: 28px 20px">
-            <div>Expired codes will be listed here for reference.</div>
+            <div class="em-title">Loading codes…</div>
           </div>
         </div>
 
@@ -372,7 +425,6 @@
     </div>
   </section>
 
-<section class="section"><div class="wrap"><div data-admin="codes"></div></div></section>
 </main>
 
 <footer>
@@ -415,5 +467,6 @@
   });
 })();
 </script>
+<script src="assets/js/site-data.js"></script>
 </body>
 </html>
