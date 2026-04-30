@@ -5,13 +5,9 @@
       "pinned": true,
       "title": "Testing Blog",
       "date": "2026-04-30",
-      "image": "/assets/uploads/image_2026-04-30_020217575.png",
+      "image": "",
       "body": "Finding if this works test 17...",
-      "reactions": [
-        {
-          "emoji": "🔥"
-        }
-      ]
+      "reactions": []
     }
   ]
 }
