@@ -1,0 +1,1346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cas Corp — Roblox Game Studio</title>
+<meta name="description" content="Cas Corp is an independent Roblox game studio building anime-inspired multiplayer experiences. Home of Anime Verse.">
+<meta name="theme-color" content="#1a1a22">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cas Corp — Roblox Game Studio">
+<meta property="og:description" content="Independent Roblox studio building the next generation of anime-inspired games. Home of Anime Verse.">
+<meta property="og:image" content="assets/cas-corp-logo.png">
+<meta property="og:site_name" content="Cas Corp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cas Corp — Roblox Game Studio">
+<meta name="twitter:description" content="Independent Roblox studio building the next generation of anime-inspired games. Home of Anime Verse.">
+<meta name="twitter:image" content="assets/cas-corp-logo.png">
+<link rel="icon" type="image/png" href="assets/cas-corp-logo.png">
+<link rel="apple-touch-icon" href="assets/cas-corp-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg: oklch(0.13 0.012 260);
+    --bg-2: oklch(0.16 0.013 260);
+    --surface: oklch(0.185 0.014 260);
+    --surface-2: oklch(0.22 0.015 260);
+    --line: oklch(1 0 0 / 0.07);
+    --line-strong: oklch(1 0 0 / 0.14);
+    --fg: oklch(0.97 0.003 260);
+    --muted: oklch(0.72 0.012 260);
+    --dim: oklch(0.55 0.012 260);
+    --red: oklch(0.66 0.22 22);
+    --red-soft: oklch(0.66 0.22 22 / 0.55);
+    --blue: oklch(0.68 0.18 255);
+    --blue-soft: oklch(0.68 0.18 255 / 0.55);
+    --grad: linear-gradient(90deg, var(--red) 0%, oklch(0.6 0.14 330) 50%, var(--blue) 100%);
+
+    --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --maxw: 1240px;
+    --pad: clamp(20px, 4vw, 56px);
+    --radius: 14px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  img{max-width:100%; display:block}
+  a{color:inherit; text-decoration:none}
+  button{font-family:inherit; cursor:pointer}
+
+  /* ---------- Background ambient ---------- */
+  .ambient{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(900px 600px at 12% -10%, oklch(0.66 0.22 22 / 0.18), transparent 60%),
+      radial-gradient(1000px 700px at 95% 10%, oklch(0.68 0.18 255 / 0.18), transparent 60%),
+      radial-gradient(900px 900px at 50% 120%, oklch(0.5 0.12 300 / 0.12), transparent 60%);
+  }
+  .grid-overlay{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 75%);
+  }
+  .noise{
+    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.035; mix-blend-mode:overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.8'/></svg>");
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position: sticky; top:0; z-index: 50;
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    background: oklch(0.13 0.012 260 / 0.62);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 14px var(--pad);
+    display:flex; align-items:center; gap: 24px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:.02em}
+  .brand-mark{
+    height: 28px; width: auto; display:block;
+    filter: drop-shadow(0 4px 14px oklch(0.66 0.22 22 / 0.35)) drop-shadow(0 4px 14px oklch(0.68 0.18 255 / 0.35));
+  }
+  .brand-name{font-size: 15px}
+  .brand-name .dim{color:var(--dim); font-weight:400}
+  .nav-links{display:flex; gap:6px; margin-left:auto}
+  .nav-links a{
+    font-size: 13.5px; color: var(--muted);
+    padding: 8px 12px; border-radius: 8px;
+    transition: color .2s, background .2s;
+  }
+  .nav-links a:hover{color:var(--fg); background: oklch(1 0 0 / 0.04)}
+  .nav-cta{
+    padding: 9px 14px; font-size: 13.5px; font-weight: 500;
+    border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    background: oklch(1 0 0 / 0.03);
+    color: var(--fg);
+    transition: all .2s;
+  }
+  .nav-cta:hover{background: oklch(1 0 0 / 0.08); border-color: oklch(1 0 0 / 0.25)}
+
+  /* Mobile hamburger */
+  .nav-toggle{
+    display: none;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    background: oklch(1 0 0 / 0.03);
+    color: var(--fg);
+    cursor: pointer;
+    margin-left: 10px;
+    align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .nav-toggle:hover{background: oklch(1 0 0 / 0.08)}
+  .nav-toggle svg{width: 18px; height: 18px}
+  .nav-toggle .icon-close{display: none}
+  body.menu-open .nav-toggle .icon-open{display: none}
+  body.menu-open .nav-toggle .icon-close{display: block}
+  /* Mobile-only hamburger: full nav on desktop, hamburger below 720px */
+  @media (max-width: 719px){
+    .nav-links{display: none !important}
+    .nav-cta{display: none !important}
+    .nav-toggle{display: inline-flex !important}
+  }
+  @media (min-width: 720px){
+    .nav-toggle{display: none !important}
+  }
+  .mobile-menu{padding: 100px 28px 40px}
+  @media (min-width: 720px){
+    .mobile-menu{padding: 120px 48px 60px}
+    .mobile-menu-links{max-width: 720px; margin: 0 auto; width: 100%}
+    .mobile-menu-cta{max-width: 720px; margin-left: auto; margin-right: auto; width: 100%}
+    .mobile-menu-meta{text-align: center}
+  }
+  body.menu-open{overflow: hidden}
+
+  .mobile-menu{
+    position: fixed; inset: 0; z-index: 49;
+    background: oklch(0.13 0.012 260 / 0.96);
+    backdrop-filter: blur(16px);
+    display: none;
+    flex-direction: column;
+    padding: 100px 28px 40px;
+    overflow-y: auto;
+  }
+  body.menu-open .mobile-menu{display: flex}
+  .mobile-menu::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse at 20% 20%, oklch(0.66 0.22 22 / 0.12), transparent 55%),
+      radial-gradient(ellipse at 80% 80%, oklch(0.68 0.18 255 / 0.12), transparent 55%);
+  }
+  .mobile-menu-links{
+    display: flex; flex-direction: column; gap: 4px;
+    position: relative; z-index: 1;
+  }
+  .mobile-menu-links a{
+    font-size: 28px; font-weight: 500; letter-spacing: -0.015em;
+    color: var(--fg); text-decoration: none;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    transition: color .2s;
+  }
+  .mobile-menu-links a:hover{color: var(--red)}
+  .mobile-menu-links a .arrow{
+    color: var(--dim); transition: transform .2s, color .2s;
+  }
+  .mobile-menu-links a:hover .arrow{color: var(--fg); transform: translateX(4px)}
+  .mobile-menu-cta{
+    margin-top: 32px; position: relative; z-index: 1;
+    padding: 18px 22px;
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    background: var(--grad);
+    color: oklch(0.99 0.005 260);
+    font-weight: 500; font-size: 16px;
+    text-decoration: none; text-align: center;
+    box-shadow: 0 10px 40px oklch(0.66 0.22 22 / 0.2), 0 10px 40px oklch(0.68 0.18 255 / 0.2);
+  }
+  .mobile-menu-meta{
+    margin-top: auto; padding-top: 40px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--dim);
+    position: relative; z-index: 1;
+  }
+
+  
+
+  /* ---------- Generic layout ---------- */
+  main{position:relative; z-index:1}
+  section{position:relative}
+  .wrap{max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad)}
+
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display:inline-flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:""; width: 26px; height:1px; background: var(--line-strong);
+  }
+  .section-num{
+    font-family: var(--mono); font-size: 11.5px; color: var(--dim); letter-spacing: .16em;
+  }
+
+  h1,h2,h3{margin:0; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05}
+  h2{font-size: clamp(32px, 4.2vw, 52px)}
+  h3{font-size: clamp(20px, 2vw, 24px); letter-spacing: -0.01em}
+  p{margin:0}
+
+  .section-head{
+    display:flex; align-items:flex-end; justify-content:space-between; gap: 32px;
+    padding: 90px 0 36px;
+    border-top: 1px solid var(--line);
+  }
+  .section-head .title{max-width: 720px}
+  .section-head .kicker{color:var(--muted); margin-top: 18px; font-size: 15.5px; max-width: 560px}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap: 10px;
+    padding: 14px 20px;
+    font-size: 14px; font-weight: 500; letter-spacing: .01em;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: transform .15s ease, box-shadow .2s, background .2s, border-color .2s;
+    position: relative;
+  }
+  .btn svg{width:14px; height:14px}
+  .btn-primary{
+    background: linear-gradient(180deg, oklch(0.96 0.003 260), oklch(0.88 0.003 260));
+    color: oklch(0.14 0.01 260);
+    box-shadow: 0 10px 30px oklch(0.68 0.18 255 / 0.18), 0 10px 30px oklch(0.66 0.22 22 / 0.12);
+  }
+  .btn-primary:hover{transform: translateY(-1px); box-shadow: 0 14px 40px oklch(0.68 0.18 255 / 0.28), 0 14px 40px oklch(0.66 0.22 22 / 0.2)}
+  .btn-ghost{
+    background: oklch(1 0 0 / 0.03);
+    border-color: var(--line-strong);
+    color: var(--fg);
+  }
+  .btn-ghost:hover{background: oklch(1 0 0 / 0.08); border-color: oklch(1 0 0 / 0.25)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: clamp(40px, 6vw, 80px) 0 clamp(80px, 10vw, 140px);
+    position:relative;
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+  .hero-kicker{margin-bottom: 22px}
+  .hero h1{
+    font-size: clamp(40px, 5.6vw, 72px);
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+  .hero h1 .grad{
+    background: var(--grad);
+    -webkit-background-clip: text; background-clip:text; color: transparent;
+    font-weight: 600;
+  }
+  .hero-sub{
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: clamp(15px, 1.3vw, 17px);
+    max-width: 520px;
+  }
+  .hero-cta{display:flex; gap:12px; margin-top: 32px; flex-wrap:wrap}
+  .hero-meta{
+    display:flex; gap: 28px; margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    letter-spacing: .04em;
+  }
+  .hero-meta b{color: var(--fg); font-weight: 500; display:block; font-family: var(--sans); font-size: 18px; letter-spacing: -0.01em; margin-bottom: 2px}
+
+  .hero-logo-wrap{
+    position: relative;
+    display:flex; align-items:center; justify-content:center;
+    padding: 20px;
+  }
+  .hero-logo-glow{
+    position:absolute; inset: 0;
+    background:
+      radial-gradient(closest-side, oklch(0.66 0.22 22 / 0.45), transparent 70%) left center / 60% 90% no-repeat,
+      radial-gradient(closest-side, oklch(0.68 0.18 255 / 0.45), transparent 70%) right center / 60% 90% no-repeat;
+    filter: blur(30px);
+    opacity: .9;
+    animation: pulse 7s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:.8; transform:scale(1)}
+    50%{opacity:1; transform:scale(1.03)}
+  }
+  .hero-logo{
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    filter: drop-shadow(0 20px 40px oklch(0 0 0 / 0.6));
+    animation: float 9s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform: translateY(0)}
+    50%{transform: translateY(-8px)}
+  }
+
+  @media (max-width: 900px){
+    .hero-inner{grid-template-columns: 1fr; text-align: left}
+    .hero-logo-wrap{order:-1; padding: 0 0 20px}
+    .hero-meta{flex-wrap:wrap; gap: 20px 28px}
+  }
+
+  /* Scroll hint */
+  .scroll-hint{
+    position:absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .25em;
+    color: var(--dim); text-transform: uppercase;
+    display:flex; flex-direction: column; align-items:center; gap:8px;
+  }
+  .scroll-hint .bar{width:1px; height:28px; background: linear-gradient(180deg, var(--line-strong), transparent); animation: scrollBar 2.4s ease-in-out infinite}
+  @keyframes scrollBar{0%,100%{opacity:.2} 50%{opacity:1}}
+
+  /* ---------- ABOUT ---------- */
+  .about{padding-bottom: 20px}
+  .about-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items:center;
+    padding: 20px 0 80px;
+  }
+  .about-copy p{color: var(--muted); font-size: 17px; line-height: 1.65; margin-top: 20px}
+  .about-copy p:first-child{color: var(--fg); font-size: 22px; line-height: 1.4; letter-spacing: -0.01em; margin-top: 0}
+
+  .stats{
+    display:grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1px; background: var(--line);
+    border: 1px solid var(--line); border-radius: var(--radius); overflow:hidden;
+  }
+  .stat{
+    background: var(--bg);
+    padding: 28px 26px;
+    position: relative;
+  }
+  .stat-num{
+    font-size: 44px; font-weight: 500; letter-spacing: -0.03em;
+    background: var(--grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stat-label{font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .16em; text-transform: uppercase; margin-top: 6px}
+
+  @media (max-width: 900px){
+    .about-grid{grid-template-columns: 1fr; gap: 36px}
+  }
+
+  /* ---------- GAMES ---------- */
+  .games-grid{
+    display:grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
+    padding-bottom: 20px;
+  }
+  .game-card{
+    grid-column: span 6;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    transition: border-color .3s, transform .3s;
+  }
+  .game-card.feature{grid-column: span 12}
+  .game-card.small{grid-column: span 4}
+  .game-card:hover{border-color: var(--line-strong); transform: translateY(-2px)}
+  .game-card:hover .game-art::after{opacity:.9}
+
+  .game-art{
+    aspect-ratio: 16/9;
+    position: relative;
+    background:
+      repeating-linear-gradient(135deg, oklch(0.22 0.02 260) 0 14px, oklch(0.2 0.02 260) 14px 28px);
+    overflow: hidden;
+  }
+  .game-art.red{
+    background:
+      radial-gradient(ellipse at 30% 40%, oklch(0.66 0.22 22 / 0.35), transparent 60%),
+      radial-gradient(ellipse at 70% 70%, oklch(0.4 0.15 300 / 0.3), transparent 60%),
+      repeating-linear-gradient(135deg, oklch(0.22 0.02 260) 0 14px, oklch(0.2 0.02 260) 14px 28px);
+  }
+  .game-art.blue{
+    background:
+      radial-gradient(ellipse at 70% 40%, oklch(0.68 0.18 255 / 0.4), transparent 60%),
+      radial-gradient(ellipse at 30% 70%, oklch(0.5 0.12 280 / 0.3), transparent 60%),
+      repeating-linear-gradient(135deg, oklch(0.22 0.02 260) 0 14px, oklch(0.2 0.02 260) 14px 28px);
+  }
+  .game-art.mixed{
+    background:
+      radial-gradient(ellipse at 20% 30%, oklch(0.66 0.22 22 / 0.35), transparent 55%),
+      radial-gradient(ellipse at 80% 70%, oklch(0.68 0.18 255 / 0.4), transparent 55%),
+      repeating-linear-gradient(135deg, oklch(0.22 0.02 260) 0 14px, oklch(0.2 0.02 260) 14px 28px);
+  }
+  .game-art::after{
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 40%, oklch(0.13 0.012 260 / 0.9));
+    opacity: .8; transition: opacity .3s;
+  }
+  .game-art-label{
+    position:absolute; left: 18px; top: 18px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: oklch(1 0 0 / 0.55);
+    background: oklch(0 0 0 / 0.3);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    padding: 5px 10px; border-radius: 999px; z-index: 2;
+    backdrop-filter: blur(6px);
+  }
+  .game-body{
+    padding: 22px 22px 24px;
+    display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start;
+  }
+  .game-card.feature .game-body{padding: 30px 30px 32px}
+  .game-title-row{display:flex; align-items:center; gap:10px; flex-wrap: wrap}
+  .tag{
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted);
+    padding: 4px 9px; border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: oklch(1 0 0 / 0.02);
+  }
+  .tag.live{color: oklch(0.8 0.14 150); border-color: oklch(0.8 0.14 150 / 0.4)}
+  .tag.soon{color: var(--blue); border-color: oklch(0.68 0.18 255 / 0.4)}
+  .tag.concept{color: var(--red); border-color: oklch(0.66 0.22 22 / 0.4)}
+  .game-desc{color: var(--muted); margin-top: 10px; font-size: 14.5px; max-width: 520px}
+  .game-meta{
+    display:flex; gap: 18px; margin-top: 18px;
+    font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: .08em;
+  }
+  .game-meta span b{color: var(--fg); font-family: var(--sans); font-weight: 500; font-size: 13px; margin-right: 4px; letter-spacing: 0}
+
+  .game-cta{
+    display:inline-flex; align-items:center; gap: 8px;
+    padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    font-size: 13px; color: var(--fg);
+    transition: all .2s; background: oklch(1 0 0 / 0.02);
+    white-space: nowrap;
+  }
+  .game-cta:hover{background: oklch(1 0 0 / 0.06); border-color: oklch(1 0 0 / 0.25)}
+  .game-cta.disabled{color: var(--dim); cursor: not-allowed; border-style: dashed}
+
+  .game-social-row{
+    display:flex; align-items:center; gap: 14px;
+    padding: 14px 22px;
+    border-top: 1px solid var(--line);
+    background: oklch(1 0 0 / 0.015);
+  }
+  .game-card.feature .game-social-row{padding: 16px 30px}
+  .game-social-row .label{
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--dim);
+    margin-right: 4px;
+  }
+  .game-social{
+    width: 34px; height: 34px; border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: oklch(1 0 0 / 0.02);
+    display:inline-flex; align-items:center; justify-content:center;
+    transition: all .2s;
+  }
+  .game-social:hover{background: oklch(1 0 0 / 0.08); border-color: oklch(1 0 0 / 0.25); transform: translateY(-1px)}
+  .game-social svg{width:14px; height:14px; color: var(--fg); opacity: .85}
+  .game-social:hover svg{opacity:1}
+  .game-social img{width:14px; height:14px; object-fit: contain; display:block; opacity: .9}
+  .game-social img.invert{filter: invert(1) brightness(1.1); opacity:.8}
+  .game-social:hover img.invert{opacity:1}
+
+  @media (max-width: 900px){
+    .game-card, .game-card.feature, .game-card.small{grid-column: span 12}
+    .game-body{grid-template-columns: 1fr}
+  }
+
+  /* ---------- TEAM ---------- */
+  .team-grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    padding-bottom: 20px;
+    justify-content: center;
+  }
+  .team-grid .member{max-width: 260px; width: 100%; margin: 0 auto}
+  .team-group{margin-top: 40px}
+  .team-group:first-of-type{margin-top: 8px}
+  .team-group-head{
+    display:flex; align-items: baseline; justify-content: center; gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+  .team-group[data-size="1"] .team-grid{grid-template-columns: minmax(220px, 260px)}
+  .team-group[data-size="2"] .team-grid{grid-template-columns: repeat(2, minmax(220px, 260px))}
+  .team-group[data-size="3"] .team-grid{grid-template-columns: repeat(3, minmax(220px, 260px))}
+  .team-group[data-size="4"] .team-grid{grid-template-columns: repeat(4, minmax(200px, 260px))}
+  .team-group-title{
+    font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--fg);
+  }
+  .team-group-count{
+    font-family: var(--mono); font-size: 11px; letter-spacing: .16em;
+    color: var(--dim);
+  }
+  .member{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    transition: border-color .2s, transform .2s;
+  }
+  .member:hover{border-color: var(--line-strong); transform: translateY(-2px)}
+  .avatar{
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    background:
+      radial-gradient(circle at 30% 30%, oklch(0.3 0.04 260), oklch(0.2 0.02 260));
+    display:flex; align-items:center; justify-content:center;
+    position: relative; overflow:hidden;
+    margin-bottom: 16px;
+    border: 1px solid var(--line);
+  }
+  .avatar.r{background: radial-gradient(circle at 30% 30%, oklch(0.5 0.18 22 / 0.5), oklch(0.2 0.02 260))}
+  .avatar.b{background: radial-gradient(circle at 70% 30%, oklch(0.5 0.16 255 / 0.5), oklch(0.2 0.02 260))}
+  .avatar.p{background: radial-gradient(circle at 50% 40%, oklch(0.5 0.14 320 / 0.5), oklch(0.2 0.02 260))}
+  .avatar-initials{
+    font-size: 40px; font-weight: 500; letter-spacing: -0.02em;
+    color: oklch(1 0 0 / 0.92);
+    text-shadow: 0 2px 16px oklch(0 0 0 / 0.6);
+  }
+  .avatar-ph{
+    position:absolute; bottom: 10px; left: 10px;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: oklch(1 0 0 / 0.35);
+  }
+  .avatar-social{
+    position:absolute; top: 10px; right: 10px;
+    display:flex; gap: 6px;
+    opacity: 0; transform: translateY(-4px);
+    transition: opacity .25s ease, transform .25s ease;
+    z-index: 2;
+  }
+  .member:hover .avatar-social{opacity: 1; transform: translateY(0)}
+  .avatar-social a{
+    width: 28px; height: 28px; border-radius: 999px;
+    background: oklch(0.13 0.012 260 / 0.75);
+    border: 1px solid oklch(1 0 0 / 0.18);
+    backdrop-filter: blur(8px);
+    display:flex; align-items:center; justify-content:center;
+    transition: all .18s ease;
+  }
+  .avatar-social a:hover{background: oklch(1 0 0 / 0.14); border-color: oklch(1 0 0 / 0.35); transform: translateY(-1px)}
+  .avatar-social svg{width: 12px; height: 12px; color: oklch(1 0 0 / 0.92)}
+  .avatar-social img{width: 12px; height: 12px; object-fit: contain; display:block}
+  .avatar-social img.invert{filter: invert(1) brightness(1.1); opacity: .95}
+  .member-name{font-weight: 500; font-size: 15.5px; letter-spacing: -0.005em}
+  .member-role{font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; margin-top: 4px}
+  .member-handle{font-family: var(--mono); font-size: 11.5px; color: var(--dim); margin-top: 10px}
+
+  .collab-bar{
+    margin-top: 36px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    display:flex; align-items:center; gap: 28px; flex-wrap: wrap;
+    background: oklch(1 0 0 / 0.015);
+  }
+  .collab-bar .label{font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted)}
+  .collab-bar .items{display:flex; gap: 22px; flex-wrap: wrap; flex: 1}
+  .collab-bar .item{font-size: 14px; color: var(--fg); opacity: .78}
+  .collab-bar .item:hover{opacity: 1}
+
+  @media (max-width: 900px){
+    .team-group[data-size="3"] .team-grid{grid-template-columns: repeat(3, minmax(180px, 240px))}
+  }
+  @media (max-width: 720px){
+    .team-group[data-size="3"] .team-grid{grid-template-columns: repeat(2, minmax(180px, 240px))}
+  }
+  @media (max-width: 540px){
+    .team-grid{gap: 12px}
+    .team-group[data-size="3"] .team-grid{grid-template-columns: repeat(2, minmax(140px, 200px))}
+    .team-grid .member{max-width: 100%}
+  }
+
+  /* ---------- JOIN ---------- */
+  .join{padding-bottom: 120px}
+  .roles{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .role{
+    background: var(--bg);
+    transition: background .2s;
+  }
+  .role:hover{background: oklch(1 0 0 / 0.02)}
+  .role-head{cursor: pointer}
+  .role-title{font-weight: 500; font-size: 16.5px; letter-spacing: -0.005em}
+  .role-meta{font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .1em; margin-top: 6px}
+  .role-arrow{
+    width: 38px; height: 38px; border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--muted);
+    transition: all .25s ease;
+  }
+  .role:hover .role-arrow{background: oklch(1 0 0 / 0.06); color: var(--fg); border-color: oklch(1 0 0 / 0.25)}
+  .role-head{display:grid; grid-template-columns: 1fr auto; gap: 16px; align-items:center; padding: 22px 24px}
+  .role.open .role-arrow{transform: rotate(90deg); background: oklch(1 0 0 / 0.06); color: var(--fg); border-color: oklch(1 0 0 / 0.25)}
+  .role-panel{
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .35s ease;
+  }
+  .role.open .role-panel{grid-template-rows: 1fr}
+  .role-panel-inner{overflow: hidden}
+  .role-panel-body{
+    padding: 0 24px 22px;
+    border-top: 1px dashed var(--line);
+    margin-top: 0;
+    padding-top: 20px;
+    display: grid; grid-template-columns: 1fr auto; gap: 18px 24px; align-items: center;
+  }
+  .role-msg{color: var(--muted); font-size: 14px; max-width: 520px; line-height: 1.55}
+  .role-msg b{color: var(--fg); font-weight: 500}
+  .role-form{display:flex; gap: 8px; align-items: stretch}
+  .role-form input{
+    background: oklch(1 0 0 / 0.03);
+    border: 1px solid var(--line-strong);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 13.5px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    min-width: 220px;
+    outline: none;
+    transition: border-color .2s, background .2s;
+  }
+  .role-form input::placeholder{color: var(--dim)}
+  .role-form input:focus{border-color: oklch(1 0 0 / 0.3); background: oklch(1 0 0 / 0.06)}
+  .role-form button{
+    background: oklch(1 0 0 / 0.05);
+    border: 1px solid var(--line-strong);
+    color: var(--fg);
+    font-size: 13px; font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 10px;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .role-form button:hover{background: oklch(1 0 0 / 0.1); border-color: oklch(1 0 0 / 0.3)}
+  .role-success{color: oklch(0.8 0.14 150); font-size: 13.5px; font-family: var(--mono); letter-spacing: .02em; display:none}
+  .role.submitted .role-form{display:none}
+  .role.submitted .role-success{display:block}
+  @media (max-width: 720px){
+    .role-panel-body{grid-template-columns: 1fr}
+    .role-form{flex-wrap: wrap}
+    .role-form input{min-width: 0; flex: 1}
+  }
+
+  .join-cta{
+    margin-top: 36px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(26px, 4vw, 44px);
+    display:grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center;
+    position: relative; overflow: hidden;
+    background:
+      linear-gradient(180deg, oklch(0.17 0.015 260), oklch(0.15 0.013 260));
+  }
+  .join-cta::before{
+    content:""; position:absolute; inset:-1px;
+    background:
+      radial-gradient(600px 200px at 0% 50%, oklch(0.66 0.22 22 / 0.15), transparent 60%),
+      radial-gradient(600px 200px at 100% 50%, oklch(0.68 0.18 255 / 0.15), transparent 60%);
+    pointer-events:none;
+  }
+  .join-cta > *{position:relative}
+  .join-cta h3{font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -0.015em}
+  .join-cta p{color: var(--muted); margin-top: 10px; max-width: 560px}
+  @media (max-width: 720px){
+    .join-cta{grid-template-columns: 1fr}
+    .roles{grid-template-columns: 1fr}
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 56px 0 40px;
+    background: oklch(0.115 0.012 260);
+    position: relative;
+  }
+  .foot-grid{
+    display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+  }
+  .foot-brand .brand-mark{height: 36px}
+  .foot-brand p{color: var(--muted); margin-top: 18px; max-width: 360px; font-size: 14.5px}
+  .foot-col h4{
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--dim); margin: 0 0 14px; font-weight: 500;
+  }
+  .foot-col ul{list-style: none; padding: 0; margin: 0; display: grid; gap: 10px}
+  .foot-col a{color: var(--muted); font-size: 14px; transition: color .15s}
+  .foot-col a:hover{color: var(--fg)}
+  .foot-col a.ext{display:inline-flex; align-items:center; gap: 8px}
+  .foot-col a .ic{width: 14px; height: 14px; color: var(--dim)}
+  .foot-col a:hover .ic{color: var(--fg)}
+  .foot-col a .ic-img{width:14px; height:14px; object-fit:contain; display:block; opacity:.82; transition: opacity .15s, filter .15s}
+  .foot-col a:hover .ic-img{opacity:1}
+  .foot-col a .ic-img.invert{filter: invert(1) brightness(1.1); opacity:.7}
+  .foot-col a:hover .ic-img.invert{opacity:.95}
+
+  .foot-bottom{
+    margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line);
+    display:flex; justify-content:space-between; gap: 20px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: .08em;
+  }
+  .foot-bottom .status{display:inline-flex; align-items:center; gap:8px}
+  .foot-bottom .dot{width:7px; height:7px; border-radius: 999px; background: oklch(0.75 0.17 150); box-shadow: 0 0 10px oklch(0.75 0.17 150 / 0.6)}
+
+  @media (max-width: 900px){
+    .foot-grid{grid-template-columns: 1fr 1fr}
+    .foot-brand{grid-column: span 2}
+  }
+  @media (max-width: 540px){
+    .foot-grid{grid-template-columns: 1fr}
+    .foot-brand{grid-column: span 1}
+  }
+
+  /* Work With Us teaser */
+  .work-teaser{
+    display:grid; grid-template-columns: 1fr 1.4fr; gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    min-height: 320px;
+  }
+  .wt-card{
+    background: var(--bg);
+    padding: clamp(32px, 4vw, 56px);
+    display:flex; flex-direction: column; justify-content: center; gap: 22px;
+  }
+  .wt-count{
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    padding: 20px 28px;
+    background: oklch(1 0 0 / 0.02);
+    max-width: 260px;
+  }
+  .wt-num{font-size: 54px; font-weight: 500; letter-spacing: -0.03em; background: var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; line-height: 1}
+  .wt-label{font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-top: 6px}
+  .wt-cta{align-self: flex-start}
+  .wt-note{font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--dim); text-transform: uppercase}
+  .wt-art{
+    position: relative;
+    background:
+      radial-gradient(ellipse at 30% 40%, oklch(0.66 0.22 22 / 0.35), transparent 55%),
+      radial-gradient(ellipse at 80% 70%, oklch(0.68 0.18 255 / 0.4), transparent 55%),
+      repeating-linear-gradient(135deg, oklch(0.22 0.02 260) 0 14px, oklch(0.2 0.02 260) 14px 28px);
+  }
+  .wt-art-label{
+    position:absolute; left: 18px; top: 18px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: oklch(1 0 0 / 0.5);
+    background: oklch(0 0 0 / 0.3);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    padding: 5px 10px; border-radius: 999px;
+    backdrop-filter: blur(6px);
+  }
+  @media (max-width: 900px){
+    .work-teaser{grid-template-columns: 1fr}
+    .wt-art{min-height: 240px}
+  }
+  .reveal{opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity: 1; transform: translateY(0)}
+  /* ---------- INTRO LOADER ---------- */
+  .intro-loader{
+    position: fixed; inset: 0; z-index: 1000;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 40px;
+    transition: opacity .8s ease, visibility .8s ease;
+  }
+  .intro-loader.hidden{opacity: 0; visibility: hidden; pointer-events: none}
+  .intro-loader::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse at 30% 40%, oklch(0.66 0.22 22 / 0.22), transparent 55%),
+      radial-gradient(ellipse at 70% 60%, oklch(0.68 0.18 255 / 0.22), transparent 55%);
+    animation: intro-pulse 3s ease-in-out infinite;
+  }
+  @keyframes intro-pulse{
+    0%,100%{opacity: .7}
+    50%{opacity: 1}
+  }
+  .intro-logo-wrap{
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    animation: intro-float 3.5s ease-in-out infinite;
+  }
+  @keyframes intro-float{
+    0%,100%{transform: translateY(0)}
+    50%{transform: translateY(-10px)}
+  }
+  .intro-logo{
+    width: 120px; height: auto; display: block;
+    filter:
+      drop-shadow(0 0 40px oklch(0.66 0.22 22 / 0.55))
+      drop-shadow(0 0 80px oklch(0.68 0.18 255 / 0.45));
+    animation: intro-glow 3s ease-in-out infinite;
+  }
+  @keyframes intro-glow{
+    0%,100%{
+      filter:
+        drop-shadow(0 0 40px oklch(0.66 0.22 22 / 0.55))
+        drop-shadow(0 0 80px oklch(0.68 0.18 255 / 0.45));
+    }
+    50%{
+      filter:
+        drop-shadow(0 0 60px oklch(0.66 0.22 22 / 0.75))
+        drop-shadow(0 0 100px oklch(0.68 0.18 255 / 0.65));
+    }
+  }
+  .intro-meta{
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 18px;
+  }
+  .intro-label{
+    font-family: var(--mono); font-size: 11px; letter-spacing: .32em; text-transform: uppercase;
+    color: var(--dim);
+  }
+  .intro-bar{
+    width: 180px; height: 2px;
+    background: oklch(1 0 0 / 0.08);
+    border-radius: 999px; overflow: hidden;
+    position: relative;
+  }
+  .intro-bar::after{
+    content:""; position: absolute; inset: 0;
+    background: var(--grad);
+    transform: translateX(-100%);
+    animation: intro-progress 1.6s ease-in-out forwards;
+  }
+  @keyframes intro-progress{
+    0%{transform: translateX(-100%)}
+    100%{transform: translateX(0)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .intro-logo-wrap, .intro-logo, .intro-loader::before{animation: none}
+    .intro-bar::after{animation-duration: .4s}
+  }
+</style>
+</head>
+<body>
+
+<div class="intro-loader" id="introLoader" aria-hidden="true">
+  <div class="intro-logo-wrap">
+    <img class="intro-logo" src="assets/cas-corp-logo.png" alt="Cas Corp">
+  </div>
+  <div class="intro-meta">
+    <div class="intro-bar"></div>
+    <div class="intro-label">Cas Corp · Loading</div>
+  </div>
+</div>
+<script>
+  (function(){
+    var loader = document.getElementById('introLoader');
+    if(!loader) return;
+    try {
+      if (sessionStorage.getItem('cc-intro-shown') === '1') {
+        loader.parentNode.removeChild(loader);
+        return;
+      }
+      sessionStorage.setItem('cc-intro-shown', '1');
+    } catch(e) {}
+    var MIN = 1600;
+    var start = performance.now();
+    function hide(){
+      var elapsed = performance.now() - start;
+      var wait = Math.max(0, MIN - elapsed);
+      setTimeout(function(){
+        loader.classList.add('hidden');
+        setTimeout(function(){ if(loader.parentNode) loader.parentNode.removeChild(loader); }, 900);
+      }, wait);
+    }
+    if(document.readyState === 'complete') hide();
+    else window.addEventListener('load', hide);
+  })();
+</script>
+
+<div class="ambient"></div>
+<div class="grid-overlay"></div>
+<div class="noise"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img class="brand-mark" src="assets/cas-corp-logo.png" alt="">
+      <span class="brand-name">Cas Corp <span class="dim">/ Studio</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#games">Games</a>
+      <a href="#team">Team</a>
+      <a href="careers.html">Careers</a>
+    </div>
+    <a class="nav-cta" href="careers.html">Join the team</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-menu-links">
+    <a href="#about">About <span class="arrow">→</span></a>
+    <a href="#games">Games <span class="arrow">→</span></a>
+    <a href="#team">Team <span class="arrow">→</span></a>
+    <a href="careers.html">Careers <span class="arrow">→</span></a>
+    <a href="anime-verse.html">Anime Verse <span class="arrow">→</span></a>
+  </nav>
+  <a class="mobile-menu-cta" href="careers.html">Join the team</a>
+  <div class="mobile-menu-meta">Cas Corp · Studio</div>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-text reveal">
+        <div class="eyebrow hero-kicker">Independent Roblox Studio · Est. 2023</div>
+        <h1>Building the Next<br>Generation of <span class="grad">Roblox Anime Games</span>.</h1>
+        <p class="hero-sub">Cas Corp is a small, focused studio crafting stylized multiplayer experiences.</p>
+        <div class="hero-cta">
+          <a href="#games" class="btn btn-primary">
+            View Games
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="careers.html" class="btn btn-ghost">
+            Join the Team
+          </a>
+        </div>
+        <div class="hero-meta">
+          <div><b>5</b>Team members</div>
+          <div><b>N/A</b>Lifetime visits</div>
+          <div><b>1</b>Title shipped</div>
+        </div>
+      </div>
+
+      <div class="hero-logo-wrap reveal">
+        <div class="hero-logo-glow"></div>
+        <img class="hero-logo" src="assets/cas-corp-logo.png" alt="Cas Corp logo">
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <span class="bar"></span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="title">
+          <div class="eyebrow">01 — About</div>
+          <h2 style="margin-top:18px">A studio built<br>for the long arc.</h2>
+        </div>
+        <div class="section-num">/ ABOUT.01</div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <p>We build anime-inspired worlds with deep combat, systems you can sink hundreds of hours into, and the kind of visual polish most people don't expect on Roblox.</p>
+          <p>Founded in 2023, Cas Corp is a remote-first studio of designers, programmers, animators, and artists from across the Roblox ecosystem. We ship small, iterate fast, and treat our community like collaborators.</p>
+          <p>Our focus: make every second of player time feel intentional.</p>
+        </div>
+
+        <div class="stats reveal">
+          <div class="stat">
+            <div class="stat-num">2023</div>
+            <div class="stat-label">Founded</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">5+</div>
+            <div class="stat-label">Full-time devs</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">N/A</div>
+            <div class="stat-label">Lifetime visits</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Remote</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMES -->
+  <section id="games">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="title">
+          <div class="eyebrow">02 — Games</div>
+          <h2 style="margin-top:18px">What we're building.</h2>
+          <p class="kicker">Our shipped titles and the projects on the horizon. Everything live on Roblox, built in-engine.</p>
+        </div>
+        <div class="section-num">/ PORTFOLIO.02</div>
+      </div>
+
+      <div class="games-grid">
+        <article class="game-card feature reveal">
+          <div class="game-art">
+            <img src="assets/anime-verse-cover.png" alt="Anime Verse cover art" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0">
+          </div>
+          <div class="game-body">
+            <div>
+              <div class="game-title-row">
+                <h3>Anime Verse</h3>
+                <span class="tag live">● Live</span>
+                <span class="tag">Action RPG</span>
+              </div>
+              <p class="game-desc">A turn-based anime RPG focused on strategic, card-driven combat, team synergy, and cinematic abilities. Featuring multiple worlds, unique characters, and evolving battle systems, Anime Verse is the foundation of the Cas Corp universe.</p>
+              <div class="game-meta">
+                <span><b>N/A </b>visits</span>
+                <span><b>Coming Soon</b>rating</span>
+                <span><b>Coming Soon</b>current build</span>
+              </div>
+            </div>
+            <a class="game-cta" href="https://www.roblox.com/games/94989069362853/Anime-Verse" data-link-key="game" target="_blank" rel="noopener">
+              Play on Roblox
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+          </div>
+          <div class="game-social-row">
+            <span class="label">Follow</span>
+            <a class="game-social" href="anime-verse.html" aria-label="Website">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>
+            </a>
+            <a class="game-social" href="https://www.roblox.com/games/94989069362853/Anime-Verse" data-link-key="game" target="_blank" rel="noopener" aria-label="Roblox">
+              <img class="invert" src="assets/roblox-icon.png" alt="">
+            </a>
+            <a class="game-social" href="https://discord.com/invite/kJj9gYQvfK" data-link-key="discord" target="_blank" rel="noopener" aria-label="Discord">
+              <img src="assets/discord-icon.png" alt="">
+            </a>
+            <a class="game-social" href="https://x.com/cascorpRBLX" data-link-key="twitter" target="_blank" rel="noopener" aria-label="Twitter/X">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H3l7-9-8-9h6l5 5z"/></svg>
+            </a>
+            <a class="game-social" href="#" aria-label="YouTube">
+              <img src="assets/youtube-icon-v2.png" alt="">
+            </a>
+          </div>
+        </article>
+
+        <article class="game-card feature reveal">
+          <div class="game-art mixed" style="display:flex; align-items:center; justify-content:center">
+            <div class="game-art-label">[ future title ]</div>
+            <div style="position:relative; z-index:2; text-align:center; padding: 40px">
+              <div style="font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px">Next project</div>
+              <div style="font-size: clamp(22px, 2.2vw, 28px); font-weight: 500; letter-spacing: -0.015em; color: var(--fg)">More in production.</div>
+              <div style="color: var(--muted); margin-top: 10px; font-size: 14px; max-width: 420px">Future titles will be announced here as they leave pre-production.</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="title">
+          <div class="eyebrow">03 — Team</div>
+          <h2 style="margin-top:18px">The people<br>behind the pixels.</h2>
+          <p class="kicker">A cross-discipline group of developers, artists, and community leads — plus the collaborators we ship with.</p>
+        </div>
+        <div class="section-num">/ CREW.03</div>
+      </div>
+
+            <div data-admin="team-section"><div class="team-group" data-size="1">
+        <div class="team-group-head">
+          <span class="team-group-title">Founder</span>
+          <span class="team-group-count">01</span>
+        </div>
+        <div class="team-grid">
+          <div class="member reveal">
+            <div class="avatar r"><div class="avatar-initials">S</div><div class="avatar-ph">[ avatar ]</div><div class="avatar-social">
+              <a href="#" target="_blank" rel="noopener" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H3l7-9-8-9h6l5 5z"/></svg></a>
+              <a href="#" target="_blank" rel="noopener" aria-label="Roblox"><img class="invert" src="assets/roblox-icon.png" alt=""></a>
+            </div></div>
+            <div class="member-name">Syros</div>
+            <div class="member-role">Founder · Lead Programmer</div>
+            <div class="member-handle">@smhu</div>
+          </div>
+        </div>
+      </div><div class="team-group" data-size="3">
+        <div class="team-group-head">
+          <span class="team-group-title">Board of Directors</span>
+          <span class="team-group-count">03</span>
+        </div>
+        <div class="team-grid">
+          <div class="member reveal">
+            <div class="avatar b"><div class="avatar-initials">N</div><div class="avatar-ph">[ avatar ]</div><div class="avatar-social">
+              <a href="#" target="_blank" rel="noopener" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H3l7-9-8-9h6l5 5z"/></svg></a>
+              <a href="#" target="_blank" rel="noopener" aria-label="Roblox"><img class="invert" src="assets/roblox-icon.png" alt=""></a>
+            </div></div>
+            <div class="member-name">Noor</div>
+            <div class="member-role">Lead Director · Lead VFX Artist</div>
+            <div class="member-handle">@noorvfx.</div>
+          </div>
+          <div class="member reveal">
+            <div class="avatar r"><div class="avatar-initials">A</div><div class="avatar-ph">[ avatar ]</div><div class="avatar-social">
+              <a href="#" target="_blank" rel="noopener" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H3l7-9-8-9h6l5 5z"/></svg></a>
+              <a href="#" target="_blank" rel="noopener" aria-label="Roblox"><img class="invert" src="assets/roblox-icon.png" alt=""></a>
+            </div></div>
+            <div class="member-name">Arukio</div>
+            <div class="member-role">Lead Director · Game Designer</div>
+            <div class="member-handle">@iarukio</div>
+          </div>
+          <div class="member reveal">
+            <div class="avatar p"><div class="avatar-initials">N</div><div class="avatar-ph">[ avatar ]</div><div class="avatar-social">
+              <a href="#" target="_blank" rel="noopener" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H3l7-9-8-9h6l5 5z"/></svg></a>
+              <a href="#" target="_blank" rel="noopener" aria-label="Roblox"><img class="invert" src="assets/roblox-icon.png" alt=""></a>
+            </div></div>
+            <div class="member-name">Nile</div>
+            <div class="member-role">Investor · Ideas</div>
+            <div class="member-handle">@nile9079</div>
+          </div>
+        </div>
+      </div><div class="team-group" data-size="1">
+        <div class="team-group-head">
+          <span class="team-group-title">Development Team</span>
+          <span class="team-group-count">01</span>
+        </div>
+        <div class="team-grid">
+          <div class="member reveal">
+            <div class="avatar b"><div class="avatar-initials">L</div><div class="avatar-ph">[ avatar ]</div><div class="avatar-social">
+              <a href="#" target="_blank" rel="noopener" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H3l7-9-8-9h6l5 5z"/></svg></a>
+              <a href="#" target="_blank" rel="noopener" aria-label="Roblox"><img class="invert" src="assets/roblox-icon.png" alt=""></a>
+            </div></div>
+            <div class="member-name">Lol</div>
+            <div class="member-role">Front-End</div>
+            <div class="member-handle">@hoo123m12</div>
+          </div>
+        </div>
+      </div>
+      </div><!-- end team-section -->
+
+      <div class="collab-bar reveal">
+        <span class="label">Collaborators</span>
+        <div class="items">
+          <span class="item">SOON</span>
+          <span class="item">Halcyon Audio</span>
+          <span class="item">
+</span>
+          <span class="item">
+</span>
+          <span class="item">
+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK WITH US teaser -->
+  <section class="join" id="join">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="title">
+          <div class="eyebrow">04 — Join Us</div>
+          <h2 style="margin-top:18px">Work with us.</h2>
+          <p class="kicker">All of our positions are remote. Commission and hourly work available.</p>
+        </div>
+        <div class="section-num">/ CAREERS.04</div>
+      </div>
+
+      <div class="work-teaser reveal">
+        <div class="wt-card">
+          <div class="wt-count">
+            <div class="wt-num">6</div>
+            <div class="wt-label">Available Roles</div>
+          </div>
+          <a href="careers.html" class="btn btn-primary wt-cta">
+            Explore Careers
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+          </a>
+          <div class="wt-note">Commission / hourly available</div>
+        </div>
+        <div class="wt-art">
+          <div class="wt-art-label">[ team splash · key art ]</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <img class="brand-mark" src="assets/cas-corp-logo.png" alt="">
+          <span class="brand-name" style="font-size: 18px">Cas Corp</span>
+        </div>
+        <p>An independent Roblox studio building anime-inspired worlds. Remote-first, community-driven, built for the long arc.</p>
+      </div>
+
+      <div class="foot-col">
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#games">Games</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="careers.html">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a class="ext" href="https://discord.com/invite/kJj9gYQvfK" data-link-key="discord" target="_blank" rel="noopener">
+            <img class="ic-img" src="assets/discord-icon.png" alt="">
+            Discord
+          </a></li>
+          <li><a class="ext" href="https://www.roblox.com/communities/15976319/Cas-Corp#!/about" data-link-key="roblox" target="_blank" rel="noopener">
+            <img class="ic-img invert" src="assets/roblox-icon.png" alt="">
+            Roblox Group
+          </a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h4>Social</h4>
+        <ul>
+          <li><a class="ext" href="https://x.com/cascorpRBLX" data-link-key="twitter" target="_blank" rel="noopener">
+            <svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H3l7-9-8-9h6l5 5z"/></svg>
+            Twitter / X
+          </a></li>
+          <li><a class="ext" href="#">
+            <img class="ic-img" src="assets/youtube-icon-v2.png" alt="">
+            YouTube
+          </a></li>
+
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 Cas Corp. Not affiliated with Roblox Corporation.</span>
+      <span class="status"><span class="dot"></span>All servers operational</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('mobileMenu');
+    if(!toggle || !menu) return;
+    function close(){
+      document.body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    toggle.addEventListener('click', function(){
+      var open = document.body.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    menu.addEventListener('click', function(e){
+      if(e.target.tagName === 'A') close();
+    });
+  })();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.12, rootMargin: "0px 0px -40px 0px"});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Role disclosure
+  document.querySelectorAll('.role .role-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const role = head.parentElement;
+      const wasOpen = role.classList.contains('open');
+      document.querySelectorAll('.role.open').forEach(r => r.classList.remove('open'));
+      if (!wasOpen) role.classList.add('open');
+    });
+  });
+
+  function submitRole(e){
+    e.preventDefault();
+    const form = e.target;
+    const role = form.closest('.role');
+    role.classList.add('submitted');
+    return false;
+  }
+</script>
+</body>
+</html>
