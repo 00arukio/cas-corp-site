@@ -221,6 +221,71 @@
   }
 
   // ============================================================
+  // BLOG POSTS RENDERING (Anime Verse page)
+  // ============================================================
+  function renderPosts(data) {
+    var holder = $('[data-admin="posts"]');
+    if (!holder) return;
+
+    var posts = (data && data.posts) ? data.posts.slice() : [];
+
+    if (!posts.length) {
+      holder.innerHTML = '<div class="blog-empty"><div class="em-title">No posts yet.</div><div>Devlogs, patch notes, and announcements will appear here as development progresses.</div></div>';
+      return;
+    }
+
+    // Sort: pinned first, then by date descending
+    posts.sort(function (a, b) {
+      var pA = a.pinned ? 1 : 0;
+      var pB = b.pinned ? 1 : 0;
+      if (pA !== pB) return pB - pA;
+      return (b.date || "").localeCompare(a.date || "");
+    });
+
+    // Background tints to cycle through if no cover image
+    var tints = ["a", "b", "c", "d", "e", "f"];
+
+    var html = '<div class="blog-grid">';
+    posts.forEach(function (p, idx) {
+      html += '<article class="blog-card">';
+      if (p.pinned) html += '<div class="blog-pinned">📌 Pinned</div>';
+
+      // Cover image OR colored gradient placeholder
+      if (p.image) {
+        html += '<div class="blog-art" style="background-image:url(' + escapeHtml(p.image) + '); background-size:cover; background-position:center"></div>';
+      } else {
+        var tint = tints[idx % tints.length];
+        html += '<div class="blog-art ' + tint + '">';
+        html += '<div class="blog-art-label">' + escapeHtml(p.tag || "Post") + '</div>';
+        html += '</div>';
+      }
+
+      html += '<div class="blog-body">';
+      if (p.tag) html += '<span class="blog-tag">' + escapeHtml(p.tag) + '</span>';
+      html += '<h3>' + escapeHtml(p.title || "Untitled") + '</h3>';
+      if (p.date) html += '<div class="date">' + escapeHtml(p.date) + '</div>';
+      if (p.body) html += '<p>' + escapeHtml(p.body).replace(/\n/g, "<br>") + '</p>';
+
+      // Custom reactions
+      if (p.reactions && p.reactions.length) {
+        html += '<div class="blog-reactions">';
+        p.reactions.forEach(function (r) {
+          if (!r.emoji) return;
+          html += '<button class="blog-react" type="button">';
+          html += '<span class="emo">' + escapeHtml(r.emoji) + '</span>';
+          if (r.label) html += '<span class="cnt">' + escapeHtml(r.label) + '</span>';
+          html += '</button>';
+        });
+        html += '</div>';
+      }
+
+      html += '</div></article>';
+    });
+    html += '</div>';
+    holder.innerHTML = html;
+  }
+
+  // ============================================================
   // SITE LINKS RENDERING (replaces hrefs based on data-link-key)
   // ============================================================
   function renderLinks(data) {
@@ -258,6 +323,13 @@
     if ($('[data-admin="roles"]') || $('[data-admin="roles-count"]')) {
       fetchJSON("/_data/jobs.json").then(renderJobs).catch(function (e) {
         console.warn("[site-data] jobs failed:", e.message);
+      });
+    }
+
+    // Blog Posts — only on Anime Verse page
+    if ($('[data-admin="posts"]')) {
+      fetchJSON("/_data/posts.json").then(renderPosts).catch(function (e) {
+        console.warn("[site-data] posts failed:", e.message);
       });
     }
   }
